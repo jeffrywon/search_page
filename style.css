@@ -1,0 +1,265 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+/* Container styles */
+.container {
+    max-width: 60vw;
+    padding: 2vw;
+}
+
+/* Heading styles */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 3vw;
+}
+
+/* Search box styles */
+.search-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+#search-input {
+    flex: 1;
+    padding: 0.8vw;
+    font-size: 1vw;
+    border: 0.15vw solid #ccc;
+    border-radius: 0.4vw;
+    outline: none;
+}
+
+
+#search-btn {
+    padding: 0.6vw 1.2vw;
+    font-size: 1vw;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.4vw;
+    margin-left: 0.3vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#search-btn:hover {
+    background-color: #45a049;
+}
+
+
+/* Error message styles */
+#error-message1 {
+    color: red;
+    margin-bottom: 1.5vw;
+    margin-left: 0.15vw;
+    font-weight: bolder;
+    font-size: 1vw;
+}
+
+/* Button styles */
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin-bottom: 1.5vw;
+}
+
+.buttons h3 {
+    width: 100%;
+    margin-bottom: 0.6vw;
+    color: #333;
+}
+
+.engine-btn {
+    padding: 0.3vw 0.6vw;
+    font-size: 0.7vw;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 0.4vw;
+    margin-bottom: 0vw;
+    margin-right: 1.0vw;
+    margin-left: 0.1vw;
+    margin-top: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+
+}
+
+.domain-btn,
+#new-domain-btn {
+    padding: 0.6vw 1.2vw;
+    font-size: 1vw;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 0.4vw;
+    margin-bottom: 0.6vw;
+    margin-right: 1.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.engine-btn:hover,
+.domain-btn:hover,
+#new-domain-btn:hover {
+    background-color: #555;
+    transform: scale(1.07);
+}
+
+.engine-btn.selected,
+.domain-btn.selected {
+    background-color: #4CAF50;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    padding: 1vw;
+    border-radius: 0.4vw;
+    width: 30vw;
+    max-width: 600px;
+    box-shadow: 0 0 0.4vw rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+    text-align: center;
+    margin-bottom: 0.6vw;
+}
+
+.input-group {
+    margin-bottom: 1vw;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5vw;
+
+}
+
+.input-group input {
+    width: 28vw;
+    padding: 0.6vw;
+    font-size: 1vw;
+    border: 0.2vw solid #ccc;
+    border-radius: 0.4vw;
+    margin-bottom: 0.6vw;
+    margin-top: 0.6vw;
+    flex-direction: column;
+    align-items: center;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+}
+
+.button-group .btn {
+    padding: 0.7vw 1.5vw;
+    font-size: 1vw;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 0.4vw;
+    margin: 0 0.625vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-group .btn:hover {
+    background-color: #45a049;
+}
+
+/* Animation styles */
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 0.6s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.scale {
+    transform: scale(0);
+    animation: scaleAnimation 0.3s ease forwards;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bounce {
+    animation: bounceAnimation 0.3s ease;
+}
+
+@keyframes bounceAnimation {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-0.4vw);
+    }
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 0.15vw solid #333;
+    animation: typewriterAnimation 0.6s steps(30) forwards;
+}
+
+@keyframes typewriterAnimation {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}

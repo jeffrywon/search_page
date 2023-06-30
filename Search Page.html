@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SEARCH PAGE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+    <div class="container fade-in">
+        <h1 class="typewriter">Search Page</h1>
+        <div class="search-box scale">
+            <input type="text" id="search-input" placeholder="Enter your search query">
+            <button id="search-btn" onclick="validateAndSearch()" class="bounce">Search</button>
+        </div>
+        <div id="error-message" class="fade-in"></div>
+        <div class="button scale">
+            <button class="engine-btn selected" onclick="selectEngine(this)" class="bounce">Google</button>
+            <button class="engine-btn" onclick="selectEngine(this)" class="bounce">Bing</button>
+            <button class="engine-btn" onclick="selectEngine(this)" class="bounce">Yahoo</button>
+            <button class="engine-btn" onclick="selectEngine(this)" class="bounce">DuckDuckGo</button>
+            <button class="engine-btn" onclick="selectEngine(this)" class="bounce">百度</button>
+        </div>
+        <div class="buttons scale">
+            <h3 class="fade-in">Domains</h3>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com" class="bounce">Facebook</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com" class="bounce">Twitter</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com" class="bounce">Instagram</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".me" class="bounce">Telegram</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com" class="bounce">Pinterest</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com"
+                class="bounce">ColaManhua</button>
+            <button class="domain-btn" onclick="selectDomain(this)" data-domain=".com" class="bounce">happymh</button>
+            <button id="new-domain-btn" onclick="showNewDomainForm()" class="bounce">New</button>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Domain</h3>
+            <div class="input-group">
+                <label for="new-domain-input">Domain:</label>
+                <input type="text" id="new-domain-input" placeholder="Enter domain link">
+            </div>
+            <div id="error-message1" class="fade-in"></div>
+            <div class="button-group">
+                <button id="add-domain-btn" onclick="addNewDomain()" class="btn">Add</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            document.getElementById("search-input").focus();
+        };
+
+        var searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) { // 13 represents the Enter key
+                event.preventDefault();
+                validateAndSearch();
+            }
+        });
+
+        var newdomaininput = document.getElementById("new-domain-input");
+        window.onclick = function (event) {
+            var modal = document.getElementById("modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            newdomaininput.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) { // 13 represents the Enter key
+                    event.preventDefault();
+                    addNewDomain()
+                }
+            });
+        }
+
+
+        // Function to show the new domain form
+        function showNewDomainForm() {
+            var modal = document.getElementById("modal");
+            modal.style.display = "block";
+            document.getElementById("new-domain-input").focus();
+        }
+
+        // Function to add new domain
+        function addNewDomain() {
+            var linkInput = document.getElementById("new-domain-input");
+            var linkURL = linkInput.value.trim();
+
+            if (linkURL === "" || !linkURL.includes(".")) {
+                displayErrorMessage1("Please enter a valid link URL.");
+                return;
+            }
+
+            var domainName = "";
+            var dataDomain = "";
+
+            // Remove "https://" or "http://" if present
+            if (linkURL.startsWith("https://")) {
+                linkURL = linkURL.substr(8);
+            } else if (linkURL.startsWith("http://")) {
+                linkURL = linkURL.substr(7);
+            }
+
+            // Remove "www." if present
+            if (linkURL.startsWith("www.")) {
+                linkURL = linkURL.substr(4);
+            }
+
+            // Extract domain and data-domain
+            var parts = linkURL.split("/");
+            if (parts.length > 0) {
+                var firstPart = parts[0];
+                var domainParts = firstPart.split(".");
+                if (domainParts.length > 1) {
+                    dataDomain = domainParts[domainParts.length - 1];
+                    domainName = domainParts.slice(0, -1).join(".");
+                }
+            }
+
+            console.log("Domain Name:", domainName);
+            console.log("Data Domain:", dataDomain);
+
+
+
+            var domainBtns = document.querySelectorAll(".domain-btn");
+            var newDomainBtn = document.createElement("button");
+            newDomainBtn.className = "domain-btn";
+            newDomainBtn.textContent = domainName;
+            newDomainBtn.setAttribute("data-domain", "." + dataDomain);
+            newDomainBtn.onclick = function () { selectDomain(this); };
+
+            // Find the "New" button
+            var newButton = document.getElementById("new-domain-btn");
+
+            // Insert the new domain button before the "New" button
+            newButton.insertAdjacentElement("beforebegin", newDomainBtn);
+
+            var modal = document.getElementById("modal");
+            modal.style.display = "none";
+            linkInput.value = "";
+        }
+
+
+        // Function to select search engine
+        function selectEngine(btn) {
+            // Remove selected class from all engine buttons
+            let engineBtns = document.querySelectorAll(".engine-btn");
+            engineBtns.forEach((btn) => {
+                btn.classList.remove("selected");
+            });
+            // Add selected class to clicked button
+            btn.classList.add("selected");
+        }
+
+        // Function to select domain
+        function selectDomain(btn) {
+            // Remove selected class from all domain buttons
+            let domainBtns = document.querySelectorAll(".domain-btn");
+            domainBtns.forEach((btn) => {
+                btn.classList.remove("selected");
+            });
+            // Add selected class to clicked button
+            btn.classList.add("selected");
+        }
+
+        // Function to perform search
+        function search(query) {
+            // Get selected domain
+            let selectedDomain = document.querySelector(".domain-btn.selected");
+            let domain = "";
+            if (selectedDomain) {
+                domain = selectedDomain.textContent.toLowerCase();
+            }
+
+            // Get selected search engine and perform search
+            let selectedEngine = document.querySelector(".engine-btn.selected");
+            let searchUrl = "";
+            switch (selectedEngine.textContent) {
+                case "Bing":
+                    searchUrl = "https://www.bing.com/search?q=";
+                    break;
+                case "Yahoo":
+                    searchUrl = "https://search.yahoo.com/search?p=";
+                    break;
+                case "DuckDuckGo":
+                    searchUrl = "https://duckduckgo.com/?q=";
+                    break;
+                case "百度":
+                    searchUrl = "https://www.baidu.com/s?wd=";
+                    break;
+                default: // Default to Google if no engine is selected or if Google is selected
+                    searchUrl = "https://www.google.com/search?q=";
+                    break;
+            }
+
+            // Combine domain and query if a domain is selected
+            if (domain) {
+                let domainSuffix = selectedDomain.getAttribute("data-domain");
+                query = `site:${domain}${domainSuffix} ${query}`;
+            }
+
+            // Perform search
+            window.location.href = searchUrl + encodeURIComponent(query);
+        }
+
+        // Function to display error message
+        function displayErrorMessage(message) {
+            let errorDiv = document.getElementById("error-message");
+            errorDiv.textContent = message;
+        }
+
+        // Function to display error message
+        function displayErrorMessage1(message) {
+            let errorDiv = document.getElementById("error-message1");
+            errorDiv.textContent = message;
+        }
+
+
+        // Function to validate and search
+        function validateAndSearch() {
+            let searchInput = document.getElementById("search-input");
+            let query = searchInput.value.trim();
+
+            let errorDiv = document.getElementById("error-message");
+
+            if (query === "") {
+                alert("Please enter a valid search")
+                return;
+            }
+
+            // Clear error message
+            errorDiv.textContent = "";
+
+            search(query);
+        }
+    </script>
+</body>
+
+</html>
